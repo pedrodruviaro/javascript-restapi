@@ -14,7 +14,7 @@ app.use(express.json())
 // Routes
 app.post("/api/v1/login", () => {})
 
-app.use("/api/v1/organization", inventoryRouter)
+app.use("/api/v1/inventory", inventoryRouter)
 app.use("/api/v1/inventoryMovement", inventoryMovementRouter)
 app.use("/api/v1/organization", organizationRouter)
 app.use("/api/v1/product", productRouter)
