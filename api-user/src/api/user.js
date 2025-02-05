@@ -55,6 +55,17 @@ class ApiUser {
       res.status(500).send({ msg: e.message })
     }
   }
+
+  async Login(req, res) {
+    try {
+      const { email, password } = req.body
+      const token = await serviceUser.Login(email, password)
+
+      return res.status(200).json({ token })
+    } catch (error) {
+      res.status(500).send({ msg: error.message })
+    }
+  }
 }
 
 module.exports = new ApiUser()

@@ -3,6 +3,7 @@ const servicePerson = require("../services/person")
 class ApiPerson {
   async FindAll(_, res) {
     try {
+      console.log("session => ", req.session)
       const people = await servicePerson.FindAll()
 
       res.status(200).send({ people })
