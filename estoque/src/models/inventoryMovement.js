@@ -26,7 +26,7 @@ class InventoryMovement {
           key: "id",
         },
       },
-      productIt: {
+      productId: {
         type: database.db.Sequelize.INTEGER,
         references: {
           model: Product,

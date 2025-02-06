@@ -1,10 +1,10 @@
-const Organization = require("../models/organization")
+const organizationServices = require("../services/organization")
 
 class OrganizationController {
   async findById(req, res) {
     try {
       const { id } = req.params
-      const organization = {}
+      const organization = await organizationServices.findById(id)
 
       res.status(200).json({ organization })
     } catch (error) {
@@ -14,8 +14,13 @@ class OrganizationController {
 
   async create(req, res) {
     try {
-      const { id } = req.params
-      const organization = {}
+      const { name, address, phone, email } = req.body
+      const organization = await organizationServices.create(
+        name,
+        address,
+        phone,
+        email
+      )
 
       res.status(200).json({ organization })
     } catch (error) {
@@ -26,7 +31,14 @@ class OrganizationController {
   async update(req, res) {
     try {
       const { id } = req.params
-      const organization = {}
+      const { name, address, phone, email } = req.body
+      const organization = await organizationServices.update(
+        id,
+        name,
+        address,
+        phone,
+        email
+      )
 
       res.status(200).json({ organization })
     } catch (error) {
@@ -37,7 +49,7 @@ class OrganizationController {
   async destroy(req, res) {
     try {
       const { id } = req.params
-      const organization = {}
+      const organization = await organizationServices.destroy(id)
 
       res.status(200).json({ organization })
     } catch (error) {

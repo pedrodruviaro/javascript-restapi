@@ -24,7 +24,7 @@ async function initServer() {
   const PORT = process.env.PORT || 3000
 
   try {
-    await database.db.sync({ force: true })
+    await database.db.sync({ force: false })
 
     app.listen(PORT, () => {
       console.info(`Server running on port ${PORT}`)

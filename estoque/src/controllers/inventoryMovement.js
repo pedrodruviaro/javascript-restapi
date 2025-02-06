@@ -1,10 +1,13 @@
-const InventoryMovement = require("../models/inventoryMovement")
+const inventoryMovementServices = require("../services/inventoryMovement")
 
 class InventoryMovementController {
   async findById(req, res) {
     try {
-      const { id } = req.params
-      const inventoryMovement = {}
+      const { id, inventoryId } = req.params
+      const inventoryMovement = await inventoryMovementServices.findById(
+        inventoryId,
+        id
+      )
 
       res.status(200).json({ inventoryMovement })
     } catch (error) {
@@ -14,7 +17,10 @@ class InventoryMovementController {
 
   async findAll(req, res) {
     try {
-      const inventoryMovements = {}
+      const { inventoryId } = req.params
+      const inventoryMovements = await inventoryMovementServices.findAll(
+        inventoryId
+      )
 
       res.status(200).json({ inventoryMovements })
     } catch (error) {
@@ -24,8 +30,16 @@ class InventoryMovementController {
 
   async create(req, res) {
     try {
-      const { id } = req.params
-      const inventoryMovement = {}
+      const userId = 5
+      const { inventoryId } = req.params
+      const { type, amount, productId } = req.body
+      const inventoryMovement = await inventoryMovementServices.create(
+        inventoryId,
+        userId,
+        type,
+        amount,
+        productId
+      )
 
       res.status(200).json({ inventoryMovement })
     } catch (error) {
@@ -35,8 +49,14 @@ class InventoryMovementController {
 
   async update(req, res) {
     try {
-      const { id } = req.params
-      const inventoryMovement = {}
+      const { id, inventoryId } = req.params
+      const { type, amount } = req.body
+      const inventoryMovement = await inventoryMovementServices.update(
+        inventoryId,
+        id,
+        type,
+        amount
+      )
 
       res.status(200).json({ inventoryMovement })
     } catch (error) {
@@ -46,10 +66,10 @@ class InventoryMovementController {
 
   async destroy(req, res) {
     try {
-      const { id } = req.params
-      const inventoryMovement = {}
+      const { id, inventoryId } = req.params
+      await inventoryMovementServices.destroy(inventoryId, id)
 
-      res.status(200).json({ inventoryMovement })
+      res.status(204)
     } catch (error) {
       res.status(500).json({ msg: error?.message })
     }

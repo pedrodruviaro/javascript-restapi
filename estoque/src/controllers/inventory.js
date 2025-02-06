@@ -1,10 +1,11 @@
-const Inventory = require("../models/inventory")
+const inventoryServices = require("../services/inventory")
 
 class InventoryController {
   async findById(req, res) {
     try {
+      const organizationId = 1
       const { id } = req.params
-      const inventory = {}
+      const inventory = await inventoryServices.findById(organizationId, id)
 
       res.status(200).json({ inventory })
     } catch (error) {
@@ -14,7 +15,8 @@ class InventoryController {
 
   async findAll(req, res) {
     try {
-      const inventories = {}
+      const organizationId = 1
+      const inventories = await inventoryServices.findAll(organizationId)
 
       res.status(200).json({ inventories })
     } catch (error) {
@@ -24,8 +26,9 @@ class InventoryController {
 
   async create(req, res) {
     try {
-      const { id } = req.params
-      const inventory = {}
+      const organizationId = 1
+      const { name } = req.body
+      const inventory = await inventoryServices.create(organizationId, name)
 
       res.status(200).json({ inventory })
     } catch (error) {
@@ -35,8 +38,10 @@ class InventoryController {
 
   async update(req, res) {
     try {
+      const organizationId = 1
       const { id } = req.params
-      const inventory = {}
+      const { name } = req.body
+      const inventory = await inventoryServices.update(organizationId, id, name)
 
       res.status(200).json({ inventory })
     } catch (error) {
@@ -46,10 +51,11 @@ class InventoryController {
 
   async destroy(req, res) {
     try {
+      const organizationId = 1
       const { id } = req.params
-      const inventory = {}
+      const inventory = await inventoryServices.destroy(organizationId, id)
 
-      res.status(200).json({ inventory })
+      res.status(204).json({ inventory })
     } catch (error) {
       res.status(500).json({ msg: error?.message })
     }

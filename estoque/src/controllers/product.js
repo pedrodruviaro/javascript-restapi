@@ -1,10 +1,11 @@
-const Product = require("../models/product")
+const productServices = require("../services/product")
 
 class ProductController {
   async findById(req, res) {
     try {
       const { id } = req.params
-      const product = {}
+      const organizationId = 1
+      const product = await productServices.findById(organizationId, id)
 
       res.status(200).json({ product })
     } catch (error) {
@@ -14,7 +15,8 @@ class ProductController {
 
   async findAll(req, res) {
     try {
-      const products = {}
+      const organizationId = 1
+      const products = await productServices.findAll(organizationId)
 
       res.status(200).json({ products })
     } catch (error) {
@@ -24,8 +26,13 @@ class ProductController {
 
   async create(req, res) {
     try {
-      const { id } = req.params
-      const product = {}
+      const organizationId = 1
+      const { name, description } = req.body
+      const product = await productServices.create(
+        organizationId,
+        name,
+        description
+      )
 
       res.status(200).json({ product })
     } catch (error) {
@@ -35,8 +42,16 @@ class ProductController {
 
   async update(req, res) {
     try {
+      const organizationId = 1
       const { id } = req.params
-      const product = {}
+      const { name, description } = req.body
+
+      const product = await productServices.update(
+        organizationId,
+        id,
+        name,
+        description
+      )
 
       res.status(200).json({ product })
     } catch (error) {
@@ -46,10 +61,11 @@ class ProductController {
 
   async destroy(req, res) {
     try {
+      const organizationId = 1
       const { id } = req.params
-      const product = {}
+      const product = await productServices.destroy(organizationId, id)
 
-      res.status(200).json({ product })
+      res.status(204).json({ product })
     } catch (error) {
       res.status(500).json({ msg: error?.message })
     }
