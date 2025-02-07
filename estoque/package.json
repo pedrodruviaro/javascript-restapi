@@ -5,6 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "node --watch app.js",
+    "start": "node app.js",
     "test": "jest ./test/*"
   },
   "dependencies": {

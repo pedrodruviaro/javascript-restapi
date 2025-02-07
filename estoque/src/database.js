@@ -7,12 +7,12 @@ class Database {
 
   init() {
     this.db = new Sequelize({
-      database: "estoque",
-      host: "localhost",
-      username: "root",
-      password: "",
+      database: process.env.DATABASE_NAME,
+      host: process.env.DATABASE_HOST,
+      username: process.env.DATABASE_USERNAME,
+      password: process.env.DATABASE_PASSWORD,
       dialect: "mysql",
-      port: 3307,
+      port: process.env.DATABASE_PORT,
     })
   }
 }

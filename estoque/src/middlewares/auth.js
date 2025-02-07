@@ -9,7 +9,7 @@ function authMiddleware(role) {
       return res.status(401).json({ msg: "Invalid token or not provided" })
     }
 
-    jwt.verify(token, "MySecret", async (err, decoded) => {
+    jwt.verify(token, process.env.JWT_SECRET, async (err, decoded) => {
       if (err) {
         console.log(err)
         return res.status(401).json({ msg: "Invalid token or not provided" })

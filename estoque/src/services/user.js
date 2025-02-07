@@ -4,7 +4,6 @@ const jwt = require("jsonwebtoken")
 
 const HASH_SALT = 12
 const ROLES = ["admin", "employee"]
-const secretKey = "MySecret"
 
 class UserServices {
   async findAll(organizationId, transaction) {
@@ -87,7 +86,7 @@ class UserServices {
         role: user.role,
         organizationId: user.organizationId,
       },
-      secretKey,
+      process.env.JWT_SECRET,
       { expiresIn: 60 * 60 }
     )
   }
