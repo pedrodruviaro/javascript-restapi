@@ -1,18 +1,19 @@
 const { Router } = require("express")
 const controller = require("../controllers/user")
+const authMiddleware = require("../middlewares/auth")
 
 const router = Router()
 
 // Plain user
-router.get("/info", controller.findById)
-router.put("/", controller.update)
-router.delete("/", controller.destroy)
+router.get("/info", authMiddleware(), controller.findById)
+router.put("/", authMiddleware(), controller.update)
+router.delete("/", authMiddleware(), controller.destroy)
 
 // Admin
-router.get("/", controller.findAll)
-router.get("/:id", controller.findById)
-router.post("/", controller.create)
-router.put("/:id", controller.update)
-router.delete("/:id", controller.destroy)
+router.get("/", authMiddleware("admin"), controller.findAll)
+router.get("/:id", authMiddleware("admin"), controller.findById)
+router.post("/", authMiddleware("admin"), controller.create)
+router.put("/:id", authMiddleware("admin"), controller.update)
+router.delete("/:id", authMiddleware("admin"), controller.destroy)
 
 module.exports = router

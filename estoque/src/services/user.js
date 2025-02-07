@@ -1,8 +1,10 @@
 const User = require("../models/user")
 const bcrypt = require("bcrypt")
+const jwt = require("jsonwebtoken")
 
 const HASH_SALT = 12
 const ROLES = ["admin", "employee"]
+const secretKey = "MySecret"
 
 class UserServices {
   async findAll(organizationId, transaction) {
@@ -68,9 +70,31 @@ class UserServices {
     oldUser.destroy({ transaction })
   }
 
-  async login() {}
+  async login(email, password, transaction) {
+    if (!email || !password) throw new Error("Email or password not provided")
 
-  async verify() {}
+    const user = await User.findOne({ where: { email } }, { transaction })
+
+    if (!user) throw new Error("Invalid credentials")
+
+    const passwordMatches = await bcrypt.compare(password, user.password)
+
+    if (!passwordMatches) throw new Error("Invalid credentials")
+
+    return jwt.sign(
+      {
+        id: user.id,
+        role: user.role,
+        organizationId: user.organizationId,
+      },
+      secretKey,
+      { expiresIn: 60 * 60 }
+    )
+  }
+
+  async verify(id, role, transaction) {
+    return User.findOne({ where: { id, role } }, { transaction })
+  }
 }
 
 module.exports = new UserServices()

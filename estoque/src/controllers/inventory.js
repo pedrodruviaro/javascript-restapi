@@ -3,7 +3,7 @@ const inventoryServices = require("../services/inventory")
 class InventoryController {
   async findById(req, res) {
     try {
-      const organizationId = 1
+      const { organizationId } = req.session
       const { id } = req.params
       const inventory = await inventoryServices.findById(organizationId, id)
 
@@ -15,7 +15,7 @@ class InventoryController {
 
   async findAll(req, res) {
     try {
-      const organizationId = 1
+      const { organizationId } = req.session
       const inventories = await inventoryServices.findAll(organizationId)
 
       res.status(200).json({ inventories })
@@ -26,7 +26,7 @@ class InventoryController {
 
   async create(req, res) {
     try {
-      const organizationId = 1
+      const { organizationId } = req.session
       const { name } = req.body
       const inventory = await inventoryServices.create(organizationId, name)
 
@@ -38,7 +38,7 @@ class InventoryController {
 
   async update(req, res) {
     try {
-      const organizationId = 1
+      const { organizationId } = req.session
       const { id } = req.params
       const { name } = req.body
       const inventory = await inventoryServices.update(organizationId, id, name)
@@ -51,7 +51,7 @@ class InventoryController {
 
   async destroy(req, res) {
     try {
-      const organizationId = 1
+      const { organizationId } = req.session
       const { id } = req.params
       const inventory = await inventoryServices.destroy(organizationId, id)
 

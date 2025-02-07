@@ -30,12 +30,12 @@ class InventoryMovementController {
 
   async create(req, res) {
     try {
-      const userId = 5
+      const { id } = req.session
       const { inventoryId } = req.params
       const { type, amount, productId } = req.body
       const inventoryMovement = await inventoryMovementServices.create(
         inventoryId,
-        userId,
+        id,
         type,
         amount,
         productId

@@ -4,7 +4,7 @@ class ProductController {
   async findById(req, res) {
     try {
       const { id } = req.params
-      const organizationId = 1
+      const { organizationId } = req.session
       const product = await productServices.findById(organizationId, id)
 
       res.status(200).json({ product })
@@ -15,7 +15,7 @@ class ProductController {
 
   async findAll(req, res) {
     try {
-      const organizationId = 1
+      const { organizationId } = req.session
       const products = await productServices.findAll(organizationId)
 
       res.status(200).json({ products })
@@ -26,7 +26,7 @@ class ProductController {
 
   async create(req, res) {
     try {
-      const organizationId = 1
+      const { organizationId } = req.session
       const { name, description } = req.body
       const product = await productServices.create(
         organizationId,
@@ -42,7 +42,7 @@ class ProductController {
 
   async update(req, res) {
     try {
-      const organizationId = 1
+      const { organizationId } = req.session
       const { id } = req.params
       const { name, description } = req.body
 
@@ -61,7 +61,7 @@ class ProductController {
 
   async destroy(req, res) {
     try {
-      const organizationId = 1
+      const { organizationId } = req.session
       const { id } = req.params
       const product = await productServices.destroy(organizationId, id)
 

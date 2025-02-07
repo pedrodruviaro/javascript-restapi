@@ -3,7 +3,7 @@ const userServices = require("../services/user")
 class UserController {
   async findAll(req, res) {
     try {
-      const organizationId = 1
+      const { organizationId } = req.session
 
       const users = await userServices.findAll(organizationId)
 
@@ -15,7 +15,7 @@ class UserController {
 
   async findById(req, res) {
     try {
-      const organizationId = 1
+      const { organizationId } = req.session
       const { id } = req.params
 
       const user = await userServices.findById(organizationId, id)
@@ -28,7 +28,7 @@ class UserController {
 
   async create(req, res) {
     try {
-      const organizationId = 1
+      const { organizationId } = req.session
       const { name, email, password, role } = req.body
 
       const user = await userServices.create(
@@ -47,7 +47,7 @@ class UserController {
 
   async update(req, res) {
     try {
-      const organizationId = 1
+      const { organizationId } = req.session
       const { id } = req.params
       const { name, email, password, role } = req.body
 
@@ -68,12 +68,23 @@ class UserController {
 
   async destroy(req, res) {
     try {
-      const organizationId = 1
+      const { organizationId } = req.session
       const { id } = req.params
 
       const user = await userServices.destroy(organizationId, id)
 
       res.status(204).json({ user })
+    } catch (error) {
+      res.status(500).json({ msg: error?.message })
+    }
+  }
+
+  async login(req, res) {
+    try {
+      const { email, password } = req.body
+
+      const token = await userServices.login(email, password)
+      res.status(200).json({ token })
     } catch (error) {
       res.status(500).json({ msg: error?.message })
     }

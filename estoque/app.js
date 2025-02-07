@@ -6,13 +6,14 @@ const inventoryMovementRouter = require("./src/routes/inventoryMovement")
 const organizationRouter = require("./src/routes/organization")
 const productRouter = require("./src/routes/product")
 const userRouter = require("./src/routes/user")
+const userController = require("./src/controllers/user")
 
 const app = express()
 
 app.use(express.json())
 
 // Routes
-app.post("/api/v1/login", () => {})
+app.post("/api/v1/login", userController.login)
 
 app.use("/api/v1/inventory", inventoryRouter)
 app.use("/api/v1/inventoryMovement", inventoryMovementRouter)
